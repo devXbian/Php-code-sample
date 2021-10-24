@@ -6,6 +6,11 @@ use App\Models\Comment;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 
+/**
+ * Class CommentWritten
+ *
+ * @package App\Events
+ */
 class CommentWritten
 {
     use Dispatchable, SerializesModels;
@@ -15,7 +20,7 @@ class CommentWritten
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Comment $comment
      */
     public function __construct(Comment $comment)
     {

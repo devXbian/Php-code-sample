@@ -7,6 +7,11 @@ use App\Models\Lesson;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 
+/**
+ * Class LessonWatched
+ *
+ * @package App\Events
+ */
 class LessonWatched
 {
     use Dispatchable, SerializesModels;
@@ -17,7 +22,8 @@ class LessonWatched
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Lesson $lesson
+     * @param User $user
      */
     public function __construct(Lesson $lesson, User $user)
     {

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Lesson;
+use Database\Seeders\Master\AchievementSeeder;
+use Database\Seeders\Master\BadgeSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,5 +19,10 @@ class DatabaseSeeder extends Seeder
         $lessons = Lesson::factory()
             ->count(20)
             ->create();
+
+        $this->call([
+            BadgeSeeder::class,
+            AchievementSeeder::class
+        ]);
     }
 }

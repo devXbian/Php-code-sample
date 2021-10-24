@@ -2,9 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\AchievementUnlocked;
+use App\Events\BadgeUnlocked;
 use App\Events\LessonWatched;
 use App\Events\CommentWritten;
-use Illuminate\Support\Facades\Event;
+use App\Listeners\AchievementUnlockedListener;
+use App\Listeners\BadgeUnlockedListener;
+use App\Listeners\CommentWrittenListener;
+use App\Listeners\LessonWatchedListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,10 +21,16 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         CommentWritten::class => [
-            //
+            CommentWrittenListener::class
         ],
         LessonWatched::class => [
-            //
+            LessonWatchedListener::class
+        ],
+        AchievementUnlocked::class => [
+            AchievementUnlockedListener::class
+        ],
+        BadgeUnlocked::class => [
+            BadgeUnlockedListener::class
         ],
     ];
 
