@@ -89,7 +89,7 @@ class User extends Authenticatable
      */
     public function achievements(): BelongsToMany
     {
-        return $this->belongsToMany(Achievement::class, 'achievements_users', 'user_id', 'achievement_id')->wherePivot('watched', true);
+        return $this->belongsToMany(Achievement::class, 'achievements_users', 'user_id', 'achievement_id');
     }
 
     /**
@@ -99,7 +99,7 @@ class User extends Authenticatable
      */
     public function badges(): BelongsToMany
     {
-        return $this->belongsToMany(Badge::class, 'badges_users', 'user_id', 'badge_id')->wherePivot('watched', true);
+        return $this->belongsToMany(Badge::class, 'badges_users', 'user_id', 'badge_id');
     }
 
     /**

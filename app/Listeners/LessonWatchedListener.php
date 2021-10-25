@@ -40,13 +40,14 @@ class LessonWatchedListener
         /**
          * Assuming the Lesson and user shared in payload, Lesson is already attached to user and will exist in watched collection being fetched from user model
          */
-        $lessonWatched = $user->watched->count();
+        $lessonWatched = $user->watched()->count();
 
         /**
          * Adding an additional validation, in case the lesson shared with user in payload, is not the one user watched.
          */
 
-        $watched = $user->watched->where('id', $lesson->id)->first();
+        $watched = $user->watched()->where('id', $lesson->id)->first();
+
         if (null === $watched) {
             Log::error('The Lesson share is not yet watched by user.');
             return false;

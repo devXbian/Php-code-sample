@@ -24,7 +24,7 @@ class AchievementsController extends Controller
     {
         $currentBadge = $user->currentBadge;
 
-        $nextBadge = $currentBadge ? ($currentBadge->nextBadge) : Badge::where('prev_badge_id', null)->first();
+        $nextBadge = ($currentBadge!==null) ? ($currentBadge->nextBadge) : Badge::where('prev_badge_id', null)->first();
 
         $achievements = $user->achievements;
 

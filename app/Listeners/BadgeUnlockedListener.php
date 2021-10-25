@@ -33,6 +33,7 @@ class BadgeUnlockedListener
      * @param BadgeUnlocked $event
      *a
      * @return false
+     * @throws \JsonException
      */
     public function handle(BadgeUnlocked $event)
     {
@@ -73,7 +74,13 @@ class BadgeUnlockedListener
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Unexpected error');
+            Log::debug(json_encode(
+                [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTrace()
+                ], JSON_THROW_ON_ERROR));
+
+            Log::error('Unexpected error, Please contact admin. Original error - ' . $e->getMessage());
             return false;
         }
 

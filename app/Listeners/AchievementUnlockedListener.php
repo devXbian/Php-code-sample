@@ -62,6 +62,7 @@ class AchievementUnlockedListener
         $achievementsCount = $user->achievements->count();
 
         $badge = Badge::where('achievements_unlocked_count', $achievementsCount)->first();
+
         if ($badge) {
             BadgeUnlocked::dispatch($badge->name, $user, $achievement);
         }
