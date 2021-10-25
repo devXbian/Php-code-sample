@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Lesson;
 use Database\Seeders\Master\AchievementSeeder;
 use Database\Seeders\Master\BadgeSeeder;
