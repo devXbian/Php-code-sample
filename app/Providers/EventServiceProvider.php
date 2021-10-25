@@ -10,6 +10,8 @@ use App\Listeners\AchievementUnlockedListener;
 use App\Listeners\BadgeUnlockedListener;
 use App\Listeners\CommentWrittenListener;
 use App\Listeners\LessonWatchedListener;
+use App\Models\User;
+use App\Observers\UserObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -41,6 +43,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /**
+         * Added user observer to observe the user event, specially here to observe the new created user
+         */
+        User::observe(UserObserver::class);
     }
 }

@@ -17,8 +17,9 @@ class CreateBadgesUsersTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('badge_id')->constrained('badges_master');
             $table->boolean('is_current')->default(true);
-            $table->foreignId('achievement_id')->constrained('achievements_master');
+            $table->foreignId('achievement_id')->nullable()->constrained('achievements_master');
             $table->dateTime('date');
+            $table->unique(['user_id', 'badge_id']);
         });
     }
 

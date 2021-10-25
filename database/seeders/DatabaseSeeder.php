@@ -16,13 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $lessons = Lesson::factory()
-            ->count(20)
-            ->create();
 
+        //SEEDING MASTER DATA
         $this->call([
             BadgeSeeder::class,
             AchievementSeeder::class
         ]);
+
+        //SEEDING FAKER DATA
+        Lesson::factory()
+            ->count(20)
+            ->create();
+
+        Comment::factory()->count(2)->create();
+
     }
 }

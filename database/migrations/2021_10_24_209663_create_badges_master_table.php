@@ -20,6 +20,7 @@ class CreateBadgesMasterTable extends Migration
             $table->unsignedSmallInteger('achievements_unlocked_count')->unique();
             $table->unsignedSmallInteger('badge_order')->nullable();
             $table->foreignId('next_badge_id')->nullable()->unique()->constrained('badges_master');
+            $table->foreignId('prev_badge_id')->nullable()->unique()->constrained('badges_master');
             $table->timestamps();
         });
     }

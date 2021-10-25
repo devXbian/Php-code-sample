@@ -16,8 +16,15 @@ class LessonWatched
 {
     use Dispatchable, SerializesModels;
 
-    public $lesson;
-    public $user;
+    /**
+     * @var Lesson
+     */
+    private $lesson;
+
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * Create a new event instance.
@@ -29,5 +36,21 @@ class LessonWatched
     {
         $this->lesson = $lesson;
         $this->user = $user;
+    }
+
+    /**
+     * @return Lesson
+     */
+    public function getLesson(): Lesson
+    {
+        return $this->lesson;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }
