@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Dictionaries\Badges;
+use App\Events\AchievementUnlocked;
+use App\Events\BadgeUnlocked;
 use App\Events\CommentWritten;
 use App\Events\LessonWatched;
 use App\Models\Achievement;
@@ -214,5 +216,40 @@ class AchievementTest extends TestCase
         $response->assertJsonPath('next_badge', Badges::ADVANCED);
     }
 
+    /**
+     * Basic test case if somehow invalid achievement is passed, no achievement will be added to user
+     *
+     * @return void
+     */
+    public function test_invalid_acievement()
+    {
+        $user = User::factory()->create();
 
+        AchievementUnlocked::dispatch(Str::random(), $user); // This will return false and no achievement will be added
+
+        $response = $this->get("/users/{$user->id}/achievements");
+
+        $achievements = Achievement::all();
+
+        $response->assertJsonPath('unlocked_achievements', []);
+        $response->assertJsonPath('next_available_achievements', $achievements->pluck('name')->toArray());
+
+    }
+
+    /**
+     * Basic test case if somehow invalid badge is passed, no badge will be added to user
+     *
+     * @return void
+     */
+    public function test_invalid_badge()
+    {
+        $user = User::factory()->create();
+
+        BadgeUnlocked::dispatch(Str::random(), $user);  // This will return false and no badge will be added
+
+        $response = $this->get("/users/{$user->id}/achievements");
+
+        $response->assertJsonPath('current_badge', Badges::BEGINNER);
+        $response->assertJsonPath('next_badge', Badges::INTERMEDIATE);
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Unit;
 
-use App\Dictionaries\Badges;
 use App\Events\AchievementUnlocked;
 use App\Events\BadgeUnlocked;
 use App\Events\CommentWritten;
@@ -11,8 +10,6 @@ use App\Listeners\AchievementUnlockedListener;
 use App\Listeners\BadgeUnlockedListener;
 use App\Listeners\CommentWrittenListener;
 use App\Listeners\LessonWatchedListener;
-use App\Models\Achievement;
-use App\Models\Badge;
 use App\Models\Comment;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Event;
@@ -81,6 +78,7 @@ class EventListenerTest extends TestCase
         LessonWatched::dispatch($lesson, $user);
 
         Event::assertDispatched(AchievementUnlocked::class);
+        Event::assertNotDispatched(BadgeUnlocked::class);
 
     }
 
@@ -101,6 +99,7 @@ class EventListenerTest extends TestCase
         CommentWritten::dispatch($comment);
 
         Event::assertDispatched(AchievementUnlocked::class);
+        Event::assertNotDispatched(BadgeUnlocked::class);
 
     }
 
