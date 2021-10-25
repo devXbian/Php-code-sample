@@ -6,6 +6,13 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Class Comment
+ *
+ * @property User $user
+ *
+ * @package App\Models
+ */
 class Comment extends Model
 {
     use HasFactory;

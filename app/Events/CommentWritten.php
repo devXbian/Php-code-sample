@@ -15,7 +15,10 @@ class CommentWritten
 {
     use Dispatchable, SerializesModels;
 
-    public $comment;
+    /**
+     * @var Comment
+     */
+    private $comment;
 
     /**
      * Create a new event instance.
@@ -25,5 +28,13 @@ class CommentWritten
     public function __construct(Comment $comment)
     {
         $this->comment = $comment;
+    }
+
+    /**
+     * @return Comment
+     */
+    public function getComment(): Comment
+    {
+        return $this->comment;
     }
 }

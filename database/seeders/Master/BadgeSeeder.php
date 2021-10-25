@@ -34,6 +34,8 @@ class BadgeSeeder extends Seeder
             $badgeInfo = config('settings.badges_info.' . $badge);
             if (!empty($badgeInfo)) {
 
+                $prevBadge = Badge::where('name', $badgeInfo['prev'])->first();
+
                 $badge = Badge::updateOrCreate(
                     [
                         'name' => $badge
@@ -42,11 +44,11 @@ class BadgeSeeder extends Seeder
                         'description' => $badgeInfo['description'],
                         'achievements_unlocked_count' => $badgeInfo['achievement_count'],
                         'badge_order' => $badgeInfo['order'],
+                        'prev_badge_id' => $prevBadge->id ?? null
 
                     ]
                 );
 
-                $prevBadge = Badge::where('name', $badgeInfo['prev'])->first();
 
                 if ($prevBadge) {
                     $prevBadge->next_badge_id = $badge->id;

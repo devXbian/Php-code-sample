@@ -2,11 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\Comment;
+
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ *
+ * @property Collection $comments
+ * @property Collection $watched
+ * @property Collection $achievements
+ * @property Badge $currentBadge
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -51,17 +64,52 @@ class User extends Authenticatable
 
     /**
      * The lessons that a user has access to.
+     *
+     * @return BelongsToMany
      */
-    public function lessons()
+    public function lessons(): BelongsToMany
     {
         return $this->belongsToMany(Lesson::class);
     }
 
     /**
      * The lessons that a user has watched.
+     *
+     * @return BelongsToMany
      */
-    public function watched()
+    public function watched(): BelongsToMany
     {
         return $this->belongsToMany(Lesson::class)->wherePivot('watched', true);
     }
+
+    /**
+     * The achievements user has unlocked
+     *
+     * @return BelongsToMany
+     */
+    public function achievements(): BelongsToMany
+    {
+        return $this->belongsToMany(Achievement::class, 'achievements_users', 'user_id', 'achievement_id')->wherePivot('watched', true);
+    }
+
+    /**
+     * The badges user has unlocked
+     *
+     * @return BelongsToMany
+     */
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class, 'badges_users', 'user_id', 'badge_id')->wherePivot('watched', true);
+    }
+
+    /**
+     * The current badge user has unlocked
+     *
+     * @return BelongsTo
+     */
+    public function currentBadge(): ?BelongsTo
+    {
+        return $this->belongsTo(Badge::class, 'current_badge_id');
+    }
+
 }

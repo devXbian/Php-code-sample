@@ -14,7 +14,7 @@ class AddCurrentBadgeUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('current_badge_id')->nullable()->constrained();
+            $table->foreignId('current_badge_id')->nullable()->constrained('badges_master');
         });
     }
 
