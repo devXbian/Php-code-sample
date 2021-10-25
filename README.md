@@ -21,7 +21,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-##Assignment
+## Assignment
 
 **Achievements**
 
@@ -57,7 +57,7 @@ Users also have a badge, this is determined by the number of achievements they h
 - Master: 10 Achievements
 
 
-##Requirement
+## Requirement
 
 **Unlocking Achievements**
 
@@ -122,7 +122,7 @@ Laravel HTTP tests documentation can be found at the following url:
 https://laravel.com/docs/8.x/http-tests
 
 
-##Additional Information
+## Additional Information
 
 The project is a standard Laravel 8 application, additional installation documentation can be found at  https://laravel.com/docs/8.x/installation
 
@@ -161,7 +161,8 @@ The following relationships are available on the user model;
 
 **Test Coverage** - Your tests cover all possible scenarios and we would feel confident there are no issues deploying your code to production.
 
-##Implementation
+## Implementation
+
 **Installation**
 1. Clone this repository
 2. From the root directory run `composer install`
@@ -184,14 +185,16 @@ Achievements and Badges Master data can be handled through configuration. Howeve
  
  *AchievementUnlockedListener* is dispatching the *BadgeUnlocked* event whenever the users total number of achievements matched to any of the remaining Badges.
 
-##Test Coverage
+## Test Coverage
+
 **Feature Testing** and **Unit Testing** with major of the cases have been covered, taking care of many *positive*, *negative* , *transactional* cases in account.
 
 *AchievementTest* covers the feature testing of the \achievements endpoint.
 
 *EventListenerTest* covers the event listeners unit test cases.
 
-##Conclusion
+## Conclusion
+
 Really enjoyed working on such scenario based task, have taken global use-cases keeping scalability of system in mind. Had many more idea to implement in these use-cases, however due to time constraint, did best to cover all possible scenarios.
 >**Please Note:**, I have not thrown exception in any of the Listeners, however, have added error logs and return false, these can be converted to exceptions if required.
 
