@@ -8,6 +8,11 @@ use Database\Seeders\Master\AchievementSeeder;
 use Database\Seeders\Master\BadgeSeeder;
 use Illuminate\Database\Seeder;
 
+/**
+ * Class DatabaseSeeder
+ *
+ * @package Database\Seeders
+ */
 class DatabaseSeeder extends Seeder
 {
     /**

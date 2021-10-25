@@ -161,3 +161,48 @@ The following relationships are available on the user model;
 
 **Test Coverage** - Your tests cover all possible scenarios and we would feel confident there are no issues deploying your code to production.
 
+##Implementation
+**Installation**
+1. Clone this repository
+2. From the root directory run `composer install`
+3. You must have a MySql database running locally
+4. Update the database details in ‘.env’ to match your local setup
+5. Run `php artisan migrate --seed` to setup the database tables and master data
+
+**Master Data for Achievements and Badges**
+
+Achievements and Badges Master data can be handled through configuration. However, the better approach seems to be through database keeping the scalability of system in mind.
+
+*Achievements* - achievements_master table contains the comments_written count and lessons_watched_count to group the achievements. Both fields together are set as unique, to have the unique achievements for the users. Also, these fields have been taken as reference for the order of achievements
+
+*Badges* - badges_master table contains the achievement_unlocked_count and is set as unique, to have the unique badges for the users. This table also contain the reference of next and previous badge for each record to maintain the order of the badges.
+> **Note:** Badges data is also added in config in settings.php which can be utilised in case we have fixed count of badges. 
+ 
+ We have a badge **BEGINNER** with 0 achievements, so ideally as soon as user created in the system, the badge should be unlocked for the user. A UserObserver is created which will always trigger the BadgeUnlocked event whenever User is created.
+ 
+ *LessonWatchedListener* and *CommentWrittenListener* are dispatching the *AchievementUnlocked* event whenever the count of either lessons or comments matches the count with any of the achievements.
+ 
+ *AchievementUnlockedListener* is dispatching the *BadgeUnlocked* event whenever the users total number of achievements matched to any of the remaining Badges.
+
+##Test Coverage
+**Feature Testing** and **Unit Testing** with major of the cases have been covered, taking care of many *positive*, *negative* , *transactional* cases in account.
+
+*AchievementTest* covers the feature testing of the \achievements endpoint.
+
+*EventListenerTest* covers the event listeners unit test cases.
+
+##Conclusion
+Really enjoyed working on such scenario based task, have taken global use-cases keeping scalability of system in mind. Had many more idea to implement in these use-cases, however due to time constraint, did best to cover all possible scenarios.
+>**Please Note:**, I have not thrown exception in any of the Listeners, however, have added error logs and return false, these can be converted to exceptions if required.
+
+>Also, in test cases, I have used hardcoded values in few test-cases considering the known result due to provided master data, however, those can be done directly fetched through master database queries, those are also mentioned there, in case we want to change data according to our need we can comment and utilise those.
+
+Have many more things to explain and share, such as following: 
+- my thought-process behind this design 
+- what more additions could be done for example- Queues, usage of custom-made Helpers and Facades to have generic methods to update and get User Badges etc.
+
+If you liked the implementation or require any discussion. Feel free to contact me at *nijhawankaran7@gmail.com*. 
+
+
+**!!CHEERS!!**
+

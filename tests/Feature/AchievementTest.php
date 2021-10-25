@@ -138,8 +138,8 @@ class AchievementTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
 
         $achievements = Achievement::all();
-        $achievement[] = $achievements->where('comments_written_count', null)->first()->name ?? null;
-        $achievement[] = $achievements->where('lessons_watched_count', null)->first()->name ?? null;
+        $achievement[] = $achievements->where('comments_written_count', null)->sortBy('lessons_watched_count')->first()->name ?? null;
+        $achievement[] = $achievements->where('lessons_watched_count', null)->sortBy('comments_written_count')->first()->name ?? null;
 
 
         $response->assertJsonPath('unlocked_achievements', []);
@@ -166,8 +166,8 @@ class AchievementTest extends TestCase
 
         $achievement = Achievement::where('lessons_watched_count', 1)->first();
 
-        $remaining[] = Achievement::where('id', '<>', $achievement->id)->where('comments_written_count', null)->first()->name ?? null;
-        $remaining[] = Achievement::where('lessons_watched_count', null)->first()->name ?? null;
+        $remaining[] = Achievement::where('id', '<>', $achievement->id)->where('comments_written_count', null)->orderBy('lessons_watched_count')->first()->name ?? null;
+        $remaining[] = Achievement::where('lessons_watched_count', null)->orderBy('comments_written_count')->first()->name ?? null;
 
         $response->assertJsonPath('unlocked_achievements', [$achievement->name]);
         $response->assertJsonPath('next_available_achievements', array_values(array_filter($remaining)));
@@ -216,9 +216,9 @@ class AchievementTest extends TestCase
         $achievements = Achievement::query()->whereIn('lessons_watched_count', [1, 5])->orWhereIn('comments_written_count', [1, 3])->get();
 
 
-        $remaining[] = $masterAchievements->where('comments_written_count', null)->diff($achievements->where('comments_written_count', null))->first()->name ?? null;
+        $remaining[] = $masterAchievements->where('comments_written_count', null)->sortBy('lessons_watched_count')->diff($achievements->where('comments_written_count', null))->first()->name ?? null;
 
-        $remaining[] = $masterAchievements->where('lessons_watched_count', null)->diff($achievements->where('lessons_watched_count', null))->first()->name ?? null;
+        $remaining[] = $masterAchievements->where('lessons_watched_count', null)->sortBy('comments_written_count')->diff($achievements->where('lessons_watched_count', null))->first()->name ?? null;
 
 
         $response->assertJsonPath('unlocked_achievements', $achievements->pluck('name')->toArray());
@@ -241,8 +241,8 @@ class AchievementTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
 
         $achievements = Achievement::all();
-        $achievement[] = $achievements->where('comments_written_count', null)->first()->name ?? null;
-        $achievement[] = $achievements->where('lessons_watched_count', null)->first()->name ?? null;
+        $achievement[] = $achievements->where('comments_written_count', null)->sortBy('lessons_watched_count')->first()->name ?? null;
+        $achievement[] = $achievements->where('lessons_watched_count', null)->sortBy('comments_written_count')->first()->name ?? null;
 
 
         $response->assertJsonPath('unlocked_achievements', []);

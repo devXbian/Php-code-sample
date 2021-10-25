@@ -30,8 +30,8 @@ class AchievementsController extends Controller
 
         $masterAchievements = Achievement::all();
 
-        $remainingAchievement[] = $masterAchievements->where('comments_written_count', null)->diff($achievements->where('comments_written_count', null))->first()->name ?? null;
-        $remainingAchievement[] = $masterAchievements->where('lessons_watched_count', null)->diff($achievements->where('lessons_watched_count', null))->first()->name ?? null;
+        $remainingAchievement[] = $masterAchievements->where('comments_written_count', null)->sortBy('lessons_watched_count')->diff($achievements->where('comments_written_count', null))->first()->name ?? null;
+        $remainingAchievement[] = $masterAchievements->where('lessons_watched_count', null)->sortBy('comments_written_count')->diff($achievements->where('lessons_watched_count', null))->first()->name ?? null;
 
 
         return response()->json([
